@@ -1,0 +1,5 @@
+Related Name: Imagine, we have 2 tables where one is master and other is child. 
+Now, if we need 2 foreign key relation with master table of child table. But in normal sence, it is impossible.
+By using related_name, it is possible. 
+https://www.youtube.com/watch?v=QwefUuhiSjw
+
