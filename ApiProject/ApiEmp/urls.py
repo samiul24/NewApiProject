@@ -1,6 +1,7 @@
 from django.urls import path, include
 
-from ApiEmp.views.views import DistrictView, ThanaView
+from ApiEmp.views.views import DistrictView, ThanaView, DepartmentView, DesignationView, \
+                                EmpBasicInfoView
 
 urlpatterns = [
     path('districtentry/',  DistrictView.as_view()),
@@ -14,6 +15,8 @@ urlpatterns = [
     path('thana/<int:pk>/',  ThanaView.as_view()),
     path('thanaupdate/<int:pk>/',  ThanaView.as_view()),
     path('thanadelete/<int:pk>/',  ThanaView.as_view()),
+
+    path('employess/', EmpBasicInfoView.as_view())
 
 
 ]
