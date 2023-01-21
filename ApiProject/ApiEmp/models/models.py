@@ -10,7 +10,7 @@ class District(models.Model):
         return self.name
 
 class Thana(models.Model):
-    district=models.ForeignKey(District, related_name='district', related_query_name='tag', on_delete=models.CASCADE)
+    district=models.ForeignKey(District, related_name='districts', related_query_name='tag', on_delete=models.CASCADE)
     name=models.CharField(max_length=25, blank=False)
     
     def __str__(self):
@@ -72,7 +72,7 @@ class EmpBasicInfo(models.Model):
     image_tag.allow_tags = True
     
 class EmpSalary(models.Model):
-    employee=models.ForeignKey(EmpBasicInfo, on_delete=models.CASCADE)
+    employee=models.ForeignKey(EmpBasicInfo, on_delete=models.CASCADE, related_name='employees', null=True)
     basicsalary=models.FloatField()
     medical=models.FloatField()
     houserent=models.FloatField()

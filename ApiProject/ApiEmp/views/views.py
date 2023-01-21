@@ -1,6 +1,10 @@
 from datetime import date
 import time
-from django.db.models import Max, Min, Avg, F, OuterRef, Subquery
+from django.db.models import Case, When, Value, Count, Max, Min, Avg, F, OuterRef, Subquery, Q, FloatField
+from django.db.models.functions import StrIndex, Lower, Substr, Cast, Coalesce, LPad, Replace, RowNumber, DenseRank
+from django.db.models import Value as V
+from django.db.models.expressions import Window
+
 
 from django.shortcuts import render
 from django.http import Http404
@@ -10,7 +14,7 @@ from rest_framework.response import Response
 
 from AppLibs.response import prepare_success_response, prepare_error_response
 
-from ApiEmp.models.models import District, Thana, Department, Designation, EmpBasicInfo
+from ApiEmp.models.models import District, Thana, Department, Designation, EmpBasicInfo, EmpSalary
 from ApiEmp.serializers.serializers import DistrictSerializer, ThanaSerializer, \
                                             DepartmentSerializer, DesignationSerializer, \
                                             EmpBasicInfoSerialiser
@@ -31,14 +35,18 @@ class DistrictView(APIView):
             except Exception as ex:
                 return Response(prepare_error_response(), status=status.HTTP_400_BAD_REQUEST)
       
-        try:
-            district = District.objects.get(id=pk)
-            # print(type(district)) # it indicates district model
-            serializer = DistrictSerializer(district)
-            return Response(prepare_success_response(serializer.data), status=status.HTTP_200_OK)
+        #try:
         
-        except Exception as ex:
-            return Response(prepare_error_response(), status=status.HTTP_400_BAD_REQUEST)
+        district = District.objects.get(id=pk)
+        #data = EmpBasicInfo.objects.values('first_name','last_name','employees__basicsalary')
+        data = EmpSalary.objects.filter(employee=OuterRef('pk'))
+        print(data.query)
+        # print(type(district)) # it indicates district model
+        serializer = DistrictSerializer(district)
+        return Response(prepare_success_response(serializer.data), status=status.HTTP_200_OK)
+        
+        #except Exception as ex:
+            #return Response(prepare_error_response(), status=status.HTTP_400_BAD_REQUEST)
 
 
     

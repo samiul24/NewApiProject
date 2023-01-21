@@ -13,3 +13,4 @@ ulid-py==1.1.0
 pandas==1.5.1
 XlsxWriter==3.0.3
 pollow
+django-debug-toolbar
